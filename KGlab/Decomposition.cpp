@@ -2,6 +2,83 @@
 #include <random>
 #include <gl/GL.h>
 
+void WriteNormalTriangle(Point A, Point B, Point C) {
+	Point N = getNormal(A, B, C);
+	glNormal3dv(N.p());
+	//displayNormal(A, B, C, N);
+}
+
+// призма на 40
+void SemiCircle(std::mt19937& gen, std::uniform_real_distribution<double>& r) {
+	glBegin(GL_TRIANGLES);
+	// задаем краевые точки наших окружности
+	Point B = { 4, 1. / 2,0 };
+	Point C = { 3. / 2, 2, 0 };
+	// центры окружности на разных высотах
+	Point O = { (B.x + C.x) / 2., (B.y + C.y) / 2., 0 };
+	Point O2 = { (B.x + C.x) / 2., (B.y + C.y) / 2., 1 };
+	// вычисляем радиус
+	double R = sqrt((O.x - C.x) * (O.x - C.x) + (O.y - C.y) * (O.y - C.y));
+	// 42 братуха
+	int num_segments = 42;
+	// вычисляем начальный сдвиг
+	double StartAngle = -atan(abs(C.y - B.y) / abs(C.x - B.x));
+	// задаем координаты концов вектора (тоже на разных высотах)
+	Point EndOfVector = { O.x, O.y, 0 };
+	Point EndOfVector2 = { O.x, O.y, 1 };
+	// угол на который двигаемся
+	double Angle = M_PI / num_segments;
+	// временные переменные для хранения текущих значений
+	Point Temp, Temp2;
+
+	// крутим угол
+	for (double i = StartAngle; i <= (M_PI + EPSILON + StartAngle); i += Angle) {
+
+		// красим сегмент разблокировать если надо
+		glColor3d(r(gen), r(gen), r(gen));
+		// задаем начальную точку
+		glVertex3dv(O.p());
+		// задаем начальную точку конца вектора
+		glVertex3dv(EndOfVector.p());
+		// сохраняем значение точки перед тем как его менять
+		Temp = EndOfVector;
+		// получаем новые значения точек после сдвига
+		EndOfVector.x = O.x + R * cos(i);
+		EndOfVector.y = O.y + R * sin(i);
+		// рисуем треуголник 
+		glVertex3dv(EndOfVector.p());
+		WriteNormalTriangle(EndOfVector,Temp,O);
+
+		// делаем тоже самое на другой высоте
+		glTexCoord3dv(O2.p());
+		glVertex3dv(O2.p());
+		glTexCoord3dv(EndOfVector2.p());
+		glVertex3dv(EndOfVector2.p());
+
+		Temp2 = EndOfVector2;
+
+		EndOfVector2.x = O2.x + R * cos(i);
+		EndOfVector2.y = O2.y + R * sin(i);
+
+		glTexCoord3d(O2.x + R * cos(i), O2.y + R * sin(i), 1);
+		glVertex3dv(EndOfVector2.p());
+		// зарисовываем квадраты, соединяющие окружности
+		// 1 раз рисовать не нужно, т.к. еще не нарисовали 1 треугольник
+		if (i == StartAngle) continue;
+		WriteNormal(EndOfVector2, EndOfVector, Temp, Temp2);
+		glVertex3dv(Temp.p());
+		glVertex3dv(EndOfVector.p());
+		glVertex3dv(Temp2.p());
+
+		glVertex3dv(Temp2.p());
+		glVertex3dv(EndOfVector2.p());
+		glVertex3dv(EndOfVector.p());
+		WriteNormalTriangle(O, Temp, EndOfVector);
+	}
+
+	glEnd();
+}
+
 // призма на 30
 void Squads(std::mt19937& gen, std::uniform_real_distribution<double>& r)// SQUADS
 {
@@ -36,8 +113,8 @@ void Squads(std::mt19937& gen, std::uniform_real_distribution<double>& r)// SQUA
 	WriteNormal(A, A_t, B_t, B);
 	WriteSquare(A, A_t, B_t, B, gen, r);
 	
-	WriteNormal(B, B_t, C_t, C);
-	WriteSquare(B, B_t, C_t, C, gen, r);
+	//WriteNormal(B, B_t, C_t, C);
+	//WriteSquare(B, B_t, C_t, C, gen, r);
 	
 	WriteNormal(C, C_t, D_t, D);
 	WriteSquare(C, C_t, D_t, D, gen, r);

@@ -257,7 +257,7 @@ void Render(double delta_time)
 
 	// task 1
 	Squads(gen, r);
-
+	SemiCircle(gen, r);
 
 	//===============================================
 

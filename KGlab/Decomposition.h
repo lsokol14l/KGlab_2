@@ -7,6 +7,10 @@
 #include <sstream>
 #include <random>
 
+#define EPSILON 1e-7
+
+#define M_PI 3.14159265358979323846
+
 struct Point {
 	double x = 0;
 	double y = 0;
@@ -21,7 +25,9 @@ struct Point {
 void Squads(std::mt19937& gen, std::uniform_real_distribution<double>& r);
 //  
 void WriteSquare(Point A, Point B, Point C, Point D, std::mt19937& gen, std::uniform_real_distribution<double>& r);
+void SemiCircle(std::mt19937& gen, std::uniform_real_distribution<double>& r);
 void WriteNormal(Point A, Point B, Point C, Point D);
+void WriteNormalTriangle(Point A, Point B, Point C);
 
 void displayNormal(Point A, Point B, Point C, Point N);
 

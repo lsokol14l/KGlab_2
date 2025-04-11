@@ -71,32 +71,30 @@ void Squads(std::mt19937& gen, std::uniform_real_distribution<double>& r)// SQUA
 	// потолок
 
 	WriteNormal(D_t, C_t, B_t, A_t);
-
+	glColor4d(1, 1, 0, 0.7);
 	// вместо WriteSquare(A_t, B_t, C_t, D_t, gen, r);
-	glTexCoord3d(10 / 17., 9 / 13., 1); glVertex3dv(A_t.p());
-	glTexCoord3d(17 / 17., 10 / 13., 1); glVertex3dv(B_t.p());
-	glTexCoord3d(12 / 17., 13 / 13., 1); glVertex3dv(C_t.p());
-	glTexCoord3d(9 / 17., 10 / 13., 1); glVertex3dv(D_t.p());
+	glVertex3dv(A_t.p());
+	glVertex3dv(B_t.p());
+	glVertex3dv(C_t.p());
+	glVertex3dv(D_t.p());
 	// на 50
 	//WriteSquare(D_t, E_t, H_t, A_t, gen, r);
 
 	WriteNormal(G_t, F_t, E_t, D_t);
 
 	// Вместо WriteSquare(D_t, E_t, F_t, G_t, gen, r);
-	glTexCoord3d(9 / 17., 10 / 13., 1); glVertex3dv(D_t.p());
-	glTexCoord3d(3 / 17., 13 / 13., 1); glVertex3dv(E_t.p());
-	glTexCoord3d(0 / 17., 9 / 13., 1);  glVertex3dv(F_t.p());
-	glTexCoord3d(8 / 17., 0 / 13., 1); glVertex3dv(G_t.p());
+	glVertex3dv(D_t.p());
+	glVertex3dv(E_t.p());
+	glVertex3dv(F_t.p());
+	glVertex3dv(G_t.p());
 
 	WriteNormal(D_t, A_t, H_t, G_t);
 
 	// Вместо WriteSquare(D_t, G_t, H_t, A_t, gen, r);
-	glTexCoord3d(8 / 17., 0 / 13., 1); glVertex3dv(G_t.p());
-	glTexCoord3d(13 / 17., 2 / 13., 1); glVertex3dv(H_t.p());
-	glTexCoord3d(10 / 17., 9 / 13., 1); glVertex3dv(A_t.p());
-	glTexCoord3d(9 / 17., 10 / 13., 1); glVertex3dv(D_t.p());
-
-
+	glVertex3dv(G_t.p());
+	glVertex3dv(H_t.p());
+	glVertex3dv(A_t.p());
+	glVertex3dv(D_t.p());
 
 	glEnd();
 }

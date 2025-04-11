@@ -253,7 +253,7 @@ void Render(double delta_time)
 
 	std::mt19937 gen(42);
 	std::uniform_real_distribution<double> r(0, 1);
-	glBindTexture(GL_TEXTURE_2D, texId);
+	//glBindTexture(GL_TEXTURE_2D, texId);
 
 	// task 1
 	Squads(gen, r);
